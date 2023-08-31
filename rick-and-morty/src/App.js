@@ -4,10 +4,11 @@ import Nav from './components/Nav/Nav';
 import { useState } from "react";
 import React from 'react';
 import axios from "axios";
-import {Routes, Route} from "react-router-dom"
+import {Routes, Route, useLocation} from "react-router-dom"
 import About from './components/About/About';
 import Detail from './components/Detail/Detail';
 import Error from './components/Error404/Error';
+import LoginForm from './components/login/Login';
 
 function App() {
 
@@ -34,12 +35,16 @@ function random (){
    const idAleatorio = Math.ceil(numeroAleatorio) + 1;
    return onSearch(idAleatorio)
 }
+   const location = useLocation()
 
    return (
       <div className = 'App'>
-         <Nav onSearch = {onSearch} random={random}/>
+
+         {location.pathname !== "/" && (<Nav onSearch = {onSearch} random={random}/>)}
          <Routes> 
+
             <Route path='/about' element={<About/>}/>
+            <Route path='/' element={<LoginForm/>}/>
             <Route path="/home" element={<Cards characters = {characters} onClose = {onClose} />}/>
             <Route path='/detail/:id' element={<Detail/>}/>
             <Route path="*" element={<Error/>}/>
